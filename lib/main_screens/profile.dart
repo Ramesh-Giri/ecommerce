@@ -1,8 +1,11 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:multi_store_app/customer_screens/customer_orders.dart';
 import 'package:multi_store_app/customer_screens/wishlist.dart';
 import 'package:multi_store_app/main_screens/cart.dart';
 
+import '../widgets/alert_dialog.dart';
 import '../widgets/appbar_widgets.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -234,8 +237,18 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                 const YellowDivider(),
                                 ListTile(
                                   onTap: () {
-                                    Navigator.pushReplacementNamed(
-                                        context, '/welcome_screen');
+                                    MyAlertDialog.showMyDialog(context,
+                                        title: 'Logout?',
+                                        description:
+                                            'Are you sure you want to logout?',
+                                        tapNo: () {
+                                      Navigator.pop(context);
+                                    }, tapYes: () async {
+                                      await FirebaseAuth.instance.signOut();
+                                      Navigator.pop(context);
+                                      Navigator.pushReplacementNamed(
+                                          context, '/welcome_screen');
+                                    });
                                   },
                                   title: const Text('Logout'),
                                   leading: const Icon(Icons.logout),

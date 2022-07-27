@@ -1,5 +1,8 @@
 import 'dart:io';
 
+import 'package:cloud_firestore/cloud_firestore.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
@@ -23,11 +26,14 @@ class _CustomerRegisterState extends State<CustomerRegister> {
   late String name;
   late String email;
   late String password;
+  late String profileImageUrl, uId;
 
   final ImagePicker _picker = ImagePicker();
 
   XFile? imageFile;
   dynamic _pickedImageError;
+
+  bool isProcessing = false;
 
   void _pickImageFromCamera() async {
     try {
@@ -64,9 +70,66 @@ class _CustomerRegisterState extends State<CustomerRegister> {
       setState(() {
         _pickedImageError = e;
       });
-
-      print('$_pickedImageError');
     }
+  }
+
+  void signUp() async {
+    if (_formKey.currentState!.validate()) {
+      if (imageFile != null) {
+        //if the image is added save all the form data  ie email, name, password
+        _formKey.currentState!.save();
+
+        try {
+          setState(() {
+            isProcessing = true;
+          });
+
+          await FirebaseAuth.instance
+              .createUserWithEmailAndPassword(email: email, password: password);
+
+          var ref = FirebaseStorage.instance.ref('customer_images/$email.jpg');
+          await ref.putFile(File(imageFile!.path));
+
+          profileImageUrl = await ref.getDownloadURL();
+
+          var customerRef = FirebaseFirestore.instance.collection('customers');
+
+          uId = FirebaseAuth.instance.currentUser!.uid;
+
+          await customerRef.doc(uId).set({
+            'fullName': name,
+            'emailAddress': email,
+            'profileImageUrl': profileImageUrl,
+            'phoneNumber': '',
+            'address': '',
+            'cId': uId
+          });
+
+          //reset all the values in the form to default (empty).
+          _formKey.currentState!.reset();
+          setState(() {
+            imageFile = null;
+          });
+
+          //
+          MessageHandler.showSnackBar(
+              _scaffoldKey, 'User created successfully!');
+
+          //go to customer home screen
+          Navigator.pushReplacementNamed(context, '/customer_home');
+        } on FirebaseException catch (e) {
+          //show dialog incase of exception
+          MessageHandler.showSnackBar(_scaffoldKey, e.message.toString());
+        }
+      } else {
+        MessageHandler.showSnackBar(_scaffoldKey, 'Please pick an image');
+      }
+    } else {
+      MessageHandler.showSnackBar(_scaffoldKey, 'Please fill all fields');
+    }
+    setState(() {
+      isProcessing = false;
+    });
   }
 
   @override
@@ -147,7 +210,7 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                     padding: const EdgeInsets.symmetric(vertical: 10.0),
                     child: TextFormField(
                       validator: (value) =>
-                      value!.isEmpty ? 'Please Enter your name' : null,
+                          value!.isEmpty ? 'Please Enter your name' : null,
                       onSaved: (value) => name = value!,
                       decoration: textFormDecoration.copyWith(
                         labelText: 'Full Name',
@@ -180,7 +243,7 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                     child: TextFormField(
                       obscureText: hidePassword,
                       validator: (value) =>
-                      value!.isEmpty ? 'Please Enter your password' : null,
+                          value!.isEmpty ? 'Please Enter your password' : null,
                       onSaved: (value) => password = value!,
                       decoration: textFormDecoration.copyWith(
                           labelText: 'Password',
@@ -199,32 +262,19 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                               ))),
                     ),
                   ),
-                  AuthMainButton(
-                    label: 'Sign Up',
-                    onTap: () {
-                      if (_formKey.currentState!.validate()) {
-                        if (imageFile != null) {
-                          _formKey.currentState!.reset();
-
-                          setState(() {
-                            imageFile = null;
-                          });
-                        } else {
-                          MessageHandler.showSnackBar(
-                              _scaffoldKey, 'Please pick an image');
-                        }
-
-                        _formKey.currentState!.save();
-                      } else {
-                        MessageHandler.showSnackBar(
-                            _scaffoldKey, 'Please fill all fields');
-                      }
-                    },
-                  ),
+                  isProcessing
+                      ? const CircularProgressIndicator()
+                      : AuthMainButton(
+                          label: 'Sign Up',
+                          onTap: signUp,
+                        ),
                   HaveAccount(
                     haveAccount: 'already have account??',
                     actionLabel: 'Log In',
-                    onTap: () {},
+                    onTap: () {
+                      Navigator.pushReplacementNamed(
+                          context, '/customer_signin');
+                    },
                   ),
                 ]),
               ),

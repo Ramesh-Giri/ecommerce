@@ -1,6 +1,7 @@
 import 'dart:math';
 
 import 'package:animated_text_kit/animated_text_kit.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
 
@@ -27,6 +28,8 @@ class WelcomeScreen extends StatefulWidget {
 class _WelcomeScreenState extends State<WelcomeScreen>
     with SingleTickerProviderStateMixin {
   late AnimationController _controller;
+
+  bool processing = false;
 
   @override
   void initState() {
@@ -112,7 +115,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                       ),
                       Container(
                         height: 60.0,
-                        width: MediaQuery.of(context).size.width * 0.9,
+                        width: MediaQuery
+                            .of(context)
+                            .size
+                            .width * 0.9,
                         padding: const EdgeInsets.all(12.0),
                         decoration: const BoxDecoration(
                           color: Colors.white38,
@@ -156,7 +162,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                 children: [
                   Container(
                     height: 60.0,
-                    width: MediaQuery.of(context).size.width * 0.9,
+                    width: MediaQuery
+                        .of(context)
+                        .size
+                        .width * 0.9,
                     padding: const EdgeInsets.all(12.0),
                     decoration: const BoxDecoration(
                       color: Colors.white38,
@@ -174,7 +183,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             label: 'Login',
                             onTap: () {
                               Navigator.pushReplacementNamed(
-                                  context, '/customer_home');
+                                  context, '/customer_signin');
                             },
                             widthRation: 0.25,
                           ),
@@ -182,7 +191,8 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         YellowButton(
                           label: 'Sign Up ',
                           onTap: () {
-                            Navigator.pushNamed(context, '/customer_register');
+                            Navigator.pushReplacementNamed(
+                                context, '/customer_register');
                           },
                           widthRation: 0.25,
                         ),
@@ -218,9 +228,21 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                         width: 50.0,
                       ),
                     ),
-                    SocialMediaIcon(
+                    processing
+                        ? const CircularProgressIndicator()
+                        : SocialMediaIcon(
                       label: 'Guest',
-                      onPressed: () {},
+                      onPressed: () async {
+                        setState(() {
+                          processing = true;
+                        });
+                        await FirebaseAuth.instance.signInAnonymously();
+                        setState(() {
+                          processing = false;
+                        });
+                        Navigator.pushReplacementNamed(
+                            context, '/customer_home');
+                      },
                       child: const Icon(
                         Icons.person,
                         size: 55.0,
@@ -242,7 +264,8 @@ class AnimatedLogo extends StatelessWidget {
   const AnimatedLogo({
     Key? key,
     required AnimationController controller,
-  })  : _controller = controller,
+  })
+      : _controller = controller,
         super(key: key);
 
   final AnimationController _controller;
@@ -259,11 +282,10 @@ class AnimatedLogo extends StatelessWidget {
 }
 
 class SocialMediaIcon extends StatelessWidget {
-  const SocialMediaIcon(
-      {Key? key,
-      required this.label,
-      required this.onPressed,
-      required this.child})
+  const SocialMediaIcon({Key? key,
+    required this.label,
+    required this.onPressed,
+    required this.child})
       : super(key: key);
 
   final String label;
