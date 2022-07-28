@@ -4,14 +4,14 @@ import 'package:flutter/material.dart';
 import '../widgets/auth_widgets.dart';
 import '../widgets/snackbar.dart';
 
-class CustomerLogin extends StatefulWidget {
-  const CustomerLogin({Key? key}) : super(key: key);
+class SupplierLogin extends StatefulWidget {
+  const SupplierLogin({Key? key}) : super(key: key);
 
   @override
-  State<CustomerLogin> createState() => _CustomerLoginState();
+  State<SupplierLogin> createState() => _SupplierLoginState();
 }
 
-class _CustomerLoginState extends State<CustomerLogin> {
+class _SupplierLoginState extends State<SupplierLogin> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
@@ -42,8 +42,8 @@ class _CustomerLoginState extends State<CustomerLogin> {
         //
         MessageHandler.showSnackBar(_scaffoldKey, 'Login successfully!');
 
-        //go to customer home screen
-        Navigator.pushReplacementNamed(context, '/customer_home');
+        //go to supplier home screen
+        Navigator.pushReplacementNamed(context, '/supplier_home');
       } on FirebaseException catch (e) {
         //show dialog incase of exception
         MessageHandler.showSnackBar(_scaffoldKey, e.message.toString());
@@ -151,7 +151,7 @@ class _CustomerLoginState extends State<CustomerLogin> {
                         actionLabel: 'Sign Up',
                         onTap: () {
                           Navigator.pushReplacementNamed(
-                              context, '/customer_register');
+                              context, '/supplier_register');
                         },
                       ),
                     ]),

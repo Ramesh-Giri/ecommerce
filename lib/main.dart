@@ -1,5 +1,7 @@
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/auth/supplier_login.dart';
+import 'package:multi_store_app/auth/supplier_signup.dart';
 import 'package:multi_store_app/main_screens/customer_home.dart';
 import 'package:multi_store_app/main_screens/supplier_home.dart';
 
@@ -23,8 +25,10 @@ class MyApp extends StatelessWidget {
         '/welcome_screen': (context) => const WelcomeScreen(),
         '/customer_home': (context) => const CustomerHomeScreen(),
         '/supplier_home': (context) => const SupplierHomeScreen(),
+        '/customer_login': (context) => const CustomerLogin(),
         '/customer_register': (context) => const CustomerRegister(),
-        '/customer_signin': (context) => const CustomerLogin(),
+        '/supplier_login': (context) => const SupplierLogin(),
+        '/supplier_register': (context) => const SupplierRegister(),
       },
       debugShowCheckedModeBanner: false,
       title: 'Multi-Store',

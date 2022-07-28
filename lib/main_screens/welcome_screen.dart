@@ -135,7 +135,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               label: 'Login',
                               onTap: () {
                                 Navigator.pushReplacementNamed(
-                                    context, '/supplier_home');
+                                    context, '/supplier_login');
                               },
                               widthRation: 0.25,
                             ),
@@ -143,7 +143,10 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                               padding: const EdgeInsets.only(right: 8.0),
                               child: YellowButton(
                                 label: 'Sign Up ',
-                                onTap: () {},
+                                onTap: () {
+                                  Navigator.pushReplacementNamed(
+                                      context, '/supplier_register');
+                                },
                                 widthRation: 0.25,
                               ),
                             ),
@@ -183,7 +186,7 @@ class _WelcomeScreenState extends State<WelcomeScreen>
                             label: 'Login',
                             onTap: () {
                               Navigator.pushReplacementNamed(
-                                  context, '/customer_signin');
+                                  context, '/customer_login');
                             },
                             widthRation: 0.25,
                           ),

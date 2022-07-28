@@ -9,24 +9,24 @@ import 'package:image_picker/image_picker.dart';
 import '../widgets/auth_widgets.dart';
 import '../widgets/snackbar.dart';
 
-class CustomerRegister extends StatefulWidget {
-  const CustomerRegister({Key? key}) : super(key: key);
+class SupplierRegister extends StatefulWidget {
+  const SupplierRegister({Key? key}) : super(key: key);
 
   @override
-  State<CustomerRegister> createState() => _CustomerRegisterState();
+  State<SupplierRegister> createState() => _SupplierRegisterState();
 }
 
-class _CustomerRegisterState extends State<CustomerRegister> {
+class _SupplierRegisterState extends State<SupplierRegister> {
   final GlobalKey<FormState> _formKey = GlobalKey();
 
   final GlobalKey<ScaffoldMessengerState> _scaffoldKey = GlobalKey();
 
   late bool hidePassword;
 
-  late String name;
+  late String storeName;
   late String email;
   late String password;
-  late String profileImageUrl, uId;
+  late String storeLogo, uId;
 
   final ImagePicker _picker = ImagePicker();
 
@@ -87,22 +87,22 @@ class _CustomerRegisterState extends State<CustomerRegister> {
           await FirebaseAuth.instance
               .createUserWithEmailAndPassword(email: email, password: password);
 
-          var ref = FirebaseStorage.instance.ref('customer_images/$email.jpg');
+          var ref = FirebaseStorage.instance.ref('supplier_images/$email.jpg');
           await ref.putFile(File(imageFile!.path));
 
-          profileImageUrl = await ref.getDownloadURL();
+          storeLogo = await ref.getDownloadURL();
 
-          var customerRef = FirebaseFirestore.instance.collection('customers');
+          var supplierRef = FirebaseFirestore.instance.collection('suppliers');
 
           uId = FirebaseAuth.instance.currentUser!.uid;
 
-          await customerRef.doc(uId).set({
-            'fullName': name,
+          await supplierRef.doc(uId).set({
+            'storeName': storeName,
             'emailAddress': email,
-            'profileImageUrl': profileImageUrl,
+            'storeLogo': storeLogo,
             'phoneNumber': '',
-            'address': '',
-            'cId': uId
+            'sId': uId,
+            'coverImage': '',
           });
 
           //reset all the values in the form to default (empty).
@@ -113,10 +113,10 @@ class _CustomerRegisterState extends State<CustomerRegister> {
 
           //
           MessageHandler.showSnackBar(
-              _scaffoldKey, 'User created successfully!');
+              _scaffoldKey, 'Store created successfully!');
 
-          //go to customer home screen
-          Navigator.pushReplacementNamed(context, '/customer_login');
+          //go to supplier home screen
+          Navigator.pushReplacementNamed(context, '/supplier_login');
         } on FirebaseException catch (e) {
           //show dialog incase of exception
           MessageHandler.showSnackBar(_scaffoldKey, e.message.toString());
@@ -211,10 +211,10 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                     child: TextFormField(
                       validator: (value) =>
                           value!.isEmpty ? 'Please Enter your name' : null,
-                      onSaved: (value) => name = value!,
+                      onSaved: (value) => storeName = value!,
                       decoration: textFormDecoration.copyWith(
-                        labelText: 'Full Name',
-                        hintText: 'Enter your full name',
+                        labelText: 'Store Name',
+                        hintText: 'Enter your store name',
                       ),
                     ),
                   ),
@@ -273,7 +273,7 @@ class _CustomerRegisterState extends State<CustomerRegister> {
                     actionLabel: 'Log In',
                     onTap: () {
                       Navigator.pushReplacementNamed(
-                          context, '/customer_login');
+                          context, '/supplier_login');
                     },
                   ),
                 ]),
