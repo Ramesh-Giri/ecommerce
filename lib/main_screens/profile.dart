@@ -76,18 +76,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     top: 25.0, left: 20.0),
                                 child: Row(
                                   children: [
-                                    CircleAvatar(
-                                      radius: 50.0,
-                                      backgroundColor: Colors.grey,
-                                      backgroundImage: NetworkImage(
-                                        data['profileImageUrl'],
-                                      ),
-                                    ),
+                                    data['profileImageUrl'].isEmpty
+                                        ? CircleAvatar(
+                                            radius: 50.0,
+                                            backgroundColor: Colors.grey,
+                                            backgroundImage: AssetImage(
+                                              'images/inapp/guest.jpg',
+                                            ),
+                                          )
+                                        : CircleAvatar(
+                                            radius: 50.0,
+                                            backgroundColor: Colors.grey,
+                                            backgroundImage: NetworkImage(
+                                              data['profileImageUrl'],
+                                            ),
+                                          ),
                                     Padding(
                                       padding:
                                           const EdgeInsets.only(left: 25.0),
                                       child: Text(
-                                        data['fullName'].toUpperCase(),
+                                        data['fullName'].isEmpty
+                                            ? 'Guest'.toUpperCase()
+                                            : data['fullName'].toUpperCase(),
                                         style: const TextStyle(
                                             color: Colors.black,
                                             fontSize: 24.0,
@@ -225,19 +235,28 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                     children: [
                                       ListTile(
                                         title: const Text('Email Address'),
-                                        subtitle: Text(data['emailAddress']),
-                                        leading: Icon(Icons.email_outlined),
+                                        subtitle: Text(
+                                            data['emailAddress'].isEmpty
+                                                ? '-'.toUpperCase()
+                                                : data['emailAddress']),
+                                        leading:
+                                            const Icon(Icons.email_outlined),
                                       ),
                                       const YellowDivider(),
                                       ListTile(
                                         title: const Text('Phone No.'),
-                                        subtitle: Text(data['phoneNumber']),
+                                        subtitle: Text(
+                                            data['phoneNumber'].isEmpty
+                                                ? '-'.toUpperCase()
+                                                : data['phoneNumber']),
                                         leading: const Icon(Icons.phone),
                                       ),
                                       const YellowDivider(),
                                       ListTile(
                                         title: const Text('Address'),
-                                        subtitle: Text(data['address']),
+                                        subtitle: Text(data['address'].isEmpty
+                                            ? '-'.toUpperCase()
+                                            : data['address']),
                                         leading: const Icon(Icons.location_pin),
                                       ),
                                     ],

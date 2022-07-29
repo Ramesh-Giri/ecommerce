@@ -1,4 +1,5 @@
 import 'package:firebase_auth/firebase_auth.dart';
+import 'package:flutter/foundation.dart';
 import 'package:flutter/material.dart';
 
 import '../widgets/auth_widgets.dart';
@@ -97,6 +98,7 @@ class _SupplierLoginState extends State<SupplierLogin> {
                               return null;
                             }
                           },
+                          initialValue: kDebugMode ? 'momo@momo.com' : '',
                           onSaved: (value) => email = value!,
                           keyboardType: TextInputType.emailAddress,
                           decoration: textFormDecoration.copyWith(
@@ -113,6 +115,7 @@ class _SupplierLoginState extends State<SupplierLogin> {
                               ? 'Please Enter your password'
                               : null,
                           onSaved: (value) => password = value!,
+                          initialValue: kDebugMode ? 'admin123' : '',
                           decoration: textFormDecoration.copyWith(
                               labelText: 'Password',
                               hintText: 'Enter your password',
