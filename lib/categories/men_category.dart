@@ -35,12 +35,12 @@ class _MenCategoryState extends State<MenCategory> {
                       crossAxisCount: 3,
                       mainAxisSpacing: 75.0,
                       crossAxisSpacing: 15.0,
-                      children: List.generate(men.length, (index) {
+                      children: List.generate(men.length - 1, (index) {
                         return SubCategoryItem(
                             mainCategoryName: 'Men',
-                            subCategoryName: men[index],
+                            subCategoryName: men[index + 1],
                             assetName: 'images/men/men$index.jpg',
-                            subCategoryLabel: men[index]);
+                            subCategoryLabel: men[index + 1]);
                       }),
                     ),
                   )

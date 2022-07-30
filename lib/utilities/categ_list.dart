@@ -1,4 +1,5 @@
 List<String> maincateg = [
+  'select category',
   'men',
   'women',
   'electronics',
@@ -7,10 +8,11 @@ List<String> maincateg = [
   'home & garden',
   'beauty',
   'kids',
-  'bags'
+  'bags',
 ];
 
 List<String> men = [
+  'Subcategory',
   'shirt',
   't-shirt',
   'jacket',
@@ -22,6 +24,7 @@ List<String> men = [
   'other',
 ];
 List<String> women = [
+  'Subcategory',
   'dress',
   '2pcs sets',
   't-shirt',
@@ -34,6 +37,7 @@ List<String> women = [
   'other'
 ];
 List<String> electronics = [
+  'Subcategory',
   'phone',
   'computer',
   'laptop',
@@ -51,23 +55,25 @@ List<String> electronics = [
 ];
 
 List<String> shoes = [
+  'Subcategory',
   'men slippers',
   'men classic',
   'men casual',
   'men boots',
   'men canvas',
   'men sport',
-  'men snadals',
+  'men sandals',
   'home slippers',
   'women slippers',
   'women boots',
   'women heels',
   'women sport',
-  'women snadals',
+  'women sandals',
   'other'
 ];
 
 List<String> homeandgarden = [
+  'Subcategory',
   'living room',
   'bed room',
   'dinning room',
@@ -81,6 +87,7 @@ List<String> homeandgarden = [
 ];
 
 List<String> beauty = [
+  'Subcategory',
   'body care',
   'hair care',
   'men perfume',
@@ -90,6 +97,7 @@ List<String> beauty = [
 ];
 
 List<String> accessories = [
+  'Subcategory',
   'hat',
   'men sunglass',
   'w sunglass',
@@ -104,6 +112,7 @@ List<String> accessories = [
 ];
 
 List<String> kids = [
+  'Subcategory',
   'girls sets',
   'girls dress',
   'girls top',
@@ -116,10 +125,11 @@ List<String> kids = [
   'home wear',
   'boys suits',
   'baby shoes',
-  'other'
+  'other',
 ];
 
 List<String> bags = [
+  'Subcategory',
   'wallet',
   'clutch',
   'chest bag',
