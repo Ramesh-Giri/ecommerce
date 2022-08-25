@@ -35,12 +35,12 @@ class _BagsCategoryState extends State<BagsCategory> {
                       crossAxisCount: 3,
                       mainAxisSpacing: 75.0,
                       crossAxisSpacing: 15.0,
-                      children: List.generate(bags.length, (index) {
+                      children: List.generate(bags.length - 1, (index) {
                         return SubCategoryItem(
-                            mainCategoryName: 'Bags',
-                            subCategoryName: bags[index],
+                            mainCategoryName: 'bags',
+                            subCategoryName: bags[index + 1],
                             assetName: 'images/bags/bags$index.jpg',
-                            subCategoryLabel: bags[index]);
+                            subCategoryLabel: bags[index + 1]);
                       }),
                     ),
                   )

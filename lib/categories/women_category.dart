@@ -35,12 +35,12 @@ class _WomenCategoryState extends State<WomenCategory> {
                       crossAxisCount: 3,
                       mainAxisSpacing: 75.0,
                       crossAxisSpacing: 15.0,
-                      children: List.generate(men.length, (index) {
+                      children: List.generate(women.length - 1, (index) {
                         return SubCategoryItem(
-                            mainCategoryName: 'Women',
-                            subCategoryName: women[index],
+                            mainCategoryName: 'women',
+                            subCategoryName: women[index + 1],
                             assetName: 'images/women/women$index.jpg',
-                            subCategoryLabel: women[index]);
+                            subCategoryLabel: women[index + 1]);
                       }),
                     ),
                   )

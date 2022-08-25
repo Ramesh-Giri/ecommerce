@@ -6,17 +6,18 @@ import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 import '../widgets/product_item.dart';
 
-class MenGalleryScreen extends StatefulWidget {
-  const MenGalleryScreen({Key? key}) : super(key: key);
+class ElectronicsGalleryScreen extends StatefulWidget {
+  const ElectronicsGalleryScreen({Key? key}) : super(key: key);
 
   @override
-  State<MenGalleryScreen> createState() => _MenGalleryScreenState();
+  State<ElectronicsGalleryScreen> createState() =>
+      _ElectronicsGalleryScreenState();
 }
 
-class _MenGalleryScreenState extends State<MenGalleryScreen> {
+class _ElectronicsGalleryScreenState extends State<ElectronicsGalleryScreen> {
   final Stream<QuerySnapshot> productStream = FirebaseFirestore.instance
       .collection('products')
-      .where('mainCategory', isEqualTo: 'men')
+      .where('mainCategory', isEqualTo: 'electronics')
       .snapshots();
 
   @override
@@ -35,14 +36,16 @@ class _MenGalleryScreenState extends State<MenGalleryScreen> {
           }
 
           if (snapshot.data!.docs.isEmpty) {
-            return Text(
-              'No Product for this category',
-              style: GoogleFonts.acme(
-                  fontSize: 26.0,
-                  color: Colors.blueGrey,
-                  fontWeight: FontWeight.bold,
-                  letterSpacing: 1.5),
-              textAlign: TextAlign.center,
+            return Center(
+              child: Text(
+                'No Product for this category',
+                style: GoogleFonts.acme(
+                    fontSize: 26.0,
+                    color: Colors.blueGrey,
+                    fontWeight: FontWeight.bold,
+                    letterSpacing: 1.5),
+                textAlign: TextAlign.center,
+              ),
             );
           }
 

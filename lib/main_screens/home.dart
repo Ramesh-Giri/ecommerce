@@ -1,7 +1,11 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:multi_store_app/gallery/bags_gallery.dart';
+import 'package:multi_store_app/gallery/electronics_gallery.dart';
+import 'package:multi_store_app/gallery/shoes_gallery.dart';
 
 import '../gallery/men_gallery.dart';
+import '../gallery/women_gallery.dart';
 import '../widgets/fake_search.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -42,10 +46,10 @@ class _HomeScreenState extends State<HomeScreen> {
         body: const TabBarView(
           children: [
             MenGalleryScreen(),
-            Center(child: Text('Womens\' Screen')),
-            Center(child: Text('Shoes Screen')),
-            Center(child: Text('Bags Screen')),
-            Center(child: Text('Electronics Screen')),
+            WomenGalleryScreen(),
+            ShoesGalleryScreen(),
+            BagsGalleryScreen(),
+            ElectronicsGalleryScreen(),
             Center(child: Text('Accessories Screen')),
             Center(child: Text('Home & Gardens Screen')),
             Center(child: Text('Kids Screen')),
