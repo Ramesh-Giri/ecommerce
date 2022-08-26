@@ -24,6 +24,7 @@ class SubCategoryProducts extends StatelessWidget {
         .snapshots();
 
     return Scaffold(
+      backgroundColor: Colors.grey.shade200,
       appBar: AppBar(
         elevation: 0.0,
         centerTitle: true,
