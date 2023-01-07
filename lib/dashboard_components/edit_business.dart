@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/widgets/appbar_widgets.dart';
+
+import '../widgets/appbar_widgets.dart';
 
 class EditBusiness extends StatelessWidget {
   const EditBusiness({Key? key}) : super(key: key);

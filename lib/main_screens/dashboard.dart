@@ -1,15 +1,16 @@
+import 'package:MON_PARFUM/main_screens/visit_store.dart';
+import 'package:MON_PARFUM/utilities/app_color.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:google_fonts/google_fonts.dart';
-import 'package:multi_store_app/dashboard_components/balance.dart';
-import 'package:multi_store_app/dashboard_components/edit_business.dart';
-import 'package:multi_store_app/dashboard_components/manage_products.dart';
-import 'package:multi_store_app/dashboard_components/my_store.dart';
-import 'package:multi_store_app/dashboard_components/stats.dart';
-import 'package:multi_store_app/dashboard_components/suppliers_orders.dart';
-import 'package:multi_store_app/widgets/appbar_widgets.dart';
 
+import '../dashboard_components/balance.dart';
+import '../dashboard_components/edit_business.dart';
+import '../dashboard_components/manage_products.dart';
+import '../dashboard_components/stats.dart';
+import '../dashboard_components/suppliers_orders.dart';
 import '../widgets/alert_dialog.dart';
+import '../widgets/appbar_widgets.dart';
 
 List<String> labels = [
   'my store',
@@ -29,13 +30,13 @@ List<IconData> icons = [
   Icons.show_chart,
 ];
 
-List<Widget> pages = const [
-  MyStore(),
-  SupplierOrders(),
-  EditBusiness(),
+List<Widget> pages = [
+  VisitStore(supplierId: FirebaseAuth.instance.currentUser!.uid),
+  const SupplierOrders(),
+  const EditBusiness(),
   ManageProducts(),
-  BalanceScreen(),
-  StatsScreen()
+  const BalanceScreen(),
+  const StatsScreen()
 ];
 
 class DashboardScreen extends StatelessWidget {
@@ -87,25 +88,22 @@ class DashboardScreen extends StatelessWidget {
                     },
                     child: Card(
                       elevation: 20.0,
-                      shadowColor: Colors.purpleAccent.shade200,
-                      color: Colors.blueGrey.withOpacity(0.7),
+                      color: AppColor.appPrimary.withOpacity(0.6),
                       child: Column(
                         mainAxisAlignment: MainAxisAlignment.spaceAround,
                         children: [
                           Icon(
                             icons[index],
-                            color: Colors.yellowAccent,
-                            size: 45.0,
+                            color: Colors.white,
+                            size: 40.0,
                           ),
-                          Text(
-                            labels[index].toUpperCase(),
-                            textAlign: TextAlign.center,
-                            style: GoogleFonts.acme(
-                                letterSpacing: 2.0,
-                                fontSize: 24.0,
-                                fontWeight: FontWeight.w600,
-                                color: Colors.yellowAccent),
-                          )
+                          Text(labels[index].toUpperCase(),
+                              textAlign: TextAlign.center,
+                              style: GoogleFonts.sansita(
+                                  letterSpacing: 2.0,
+                                  fontSize: 20.0,
+                                  fontWeight: FontWeight.w600,
+                                  color: Colors.white)),
                         ],
                       ),
                     ),

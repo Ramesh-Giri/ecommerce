@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utilities/app_color.dart';
+
 class YellowButton extends StatelessWidget {
   const YellowButton(
       {Key? key,
@@ -18,11 +20,13 @@ class YellowButton extends StatelessWidget {
       height: 35.0,
       width: MediaQuery.of(context).size.width * widthRation,
       decoration: BoxDecoration(
-          color: Colors.yellow, borderRadius: BorderRadius.circular(25)),
+          color: AppColor.appPrimary.withOpacity(0.8),
+          borderRadius: BorderRadius.circular(25)),
       child: MaterialButton(
         onPressed: onTap,
         child: Text(
           label,
+          style: const TextStyle(color: Colors.white),
         ),
       ),
     );

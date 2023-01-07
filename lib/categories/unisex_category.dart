@@ -1,10 +1,10 @@
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/utilities/categ_list.dart';
 
+import '../utilities/categ_list.dart';
 import '../widgets/category_widgets.dart';
 
-class ShoesCategory extends StatelessWidget {
-  const ShoesCategory({Key? key}) : super(key: key);
+class UnisexCategory extends StatelessWidget {
+  const UnisexCategory({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -22,7 +22,7 @@ class ShoesCategory extends StatelessWidget {
                 crossAxisAlignment: CrossAxisAlignment.start,
                 children: [
                   const CategoryHeaderLabel(
-                    label: 'Shoes',
+                    label: 'Unisex',
                   ),
                   SizedBox(
                     height: MediaQuery.of(context).size.height * 0.68,
@@ -30,12 +30,12 @@ class ShoesCategory extends StatelessWidget {
                       crossAxisCount: 3,
                       mainAxisSpacing: 75.0,
                       crossAxisSpacing: 15.0,
-                      children: List.generate(shoes.length - 1, (index) {
+                      children: List.generate(unisex.length - 1, (index) {
                         return SubCategoryItem(
-                            mainCategoryName: 'shoes',
-                            subCategoryName: shoes[index + 1],
-                            assetName: 'images/shoes/shoes$index.jpg',
-                            subCategoryLabel: shoes[index + 1]);
+                            mainCategoryName: 'unisex',
+                            subCategoryName: unisex[index + 1],
+                            assetName: 'images/men/men$index.jpeg',
+                            subCategoryLabel: unisex[index + 1]);
                       }),
                     ),
                   )
@@ -44,7 +44,7 @@ class ShoesCategory extends StatelessWidget {
             ),
           ),
           const SliderBar(
-            mainCategoryName: 'Shoes',
+            mainCategoryName: 'Unisex',
           )
         ],
       ),

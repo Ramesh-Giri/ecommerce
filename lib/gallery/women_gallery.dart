@@ -38,7 +38,7 @@ class _WomenGalleryScreenState extends State<WomenGalleryScreen> {
             return Center(
               child: Text(
                 'No Product for this category',
-                style: GoogleFonts.acme(
+                style: GoogleFonts.sansita(
                     fontSize: 26.0,
                     color: Colors.blueGrey,
                     fontWeight: FontWeight.bold,

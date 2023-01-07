@@ -6,6 +6,7 @@ import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../utilities/app_color.dart';
 import '../widgets/auth_widgets.dart';
 import '../widgets/snackbar.dart';
 
@@ -102,7 +103,9 @@ class _CustomerRegisterState extends State<CustomerRegister> {
             'profileImageUrl': profileImageUrl,
             'phoneNumber': '',
             'address': '',
-            'cId': uId
+            'cId': uId,
+            'isAdmin': false,
+            'idAdmin': false,
           });
 
           //reset all the values in the form to default (empty).
@@ -144,141 +147,150 @@ class _CustomerRegisterState extends State<CustomerRegister> {
       key: _scaffoldKey,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              reverse: true,
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(children: [
-                  const AuthHeaderLabel(
-                    headerLabel: 'Sign Up',
-                  ),
-                  Row(
-                    children: [
-                      Padding(
-                        padding: const EdgeInsets.symmetric(
-                            vertical: 20.0, horizontal: 40.0),
-                        child: CircleAvatar(
-                          radius: 60.0,
-                          backgroundColor: Colors.purpleAccent,
-                          backgroundImage: imageFile == null
-                              ? null
-                              : FileImage(File(imageFile!.path)),
-                        ),
-                      ),
-                      Column(
-                        children: [
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.only(
-                                    topLeft: Radius.circular(15.0),
-                                    topRight: Radius.circular(15.0))),
-                            child: IconButton(
-                              onPressed: _pickImageFromCamera,
-                              icon: const Icon(
-                                Icons.camera_alt,
-                                color: Colors.white,
-                              ),
-                            ),
-                          ),
-                          const SizedBox(
-                            height: 8.0,
-                          ),
-                          Container(
-                            decoration: const BoxDecoration(
-                                color: Colors.purple,
-                                borderRadius: BorderRadius.only(
-                                    bottomLeft: Radius.circular(15.0),
-                                    bottomRight: Radius.circular(15.0))),
-                            child: IconButton(
-                              onPressed: _pickImageFromGallery,
-                              icon: const Icon(
-                                Icons.image_search,
-                                color: Colors.white,
-                              ),
-                            ),
-                          )
-                        ],
-                      )
-                    ],
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: TextFormField(
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please Enter your name' : null,
-                      onSaved: (value) => name = value!,
-                      decoration: textFormDecoration.copyWith(
-                        labelText: 'Full Name',
-                        hintText: 'Enter your full name',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: TextFormField(
-                      validator: (value) {
-                        if (value!.isEmpty) {
-                          return 'Please enter your Email';
-                        } else if (value.isValidEmail() == false) {
-                          return 'Please enter a valid email address';
-                        } else {
-                          return null;
-                        }
-                      },
-                      onSaved: (value) => email = value!,
-                      keyboardType: TextInputType.emailAddress,
-                      decoration: textFormDecoration.copyWith(
-                        labelText: 'Email Address',
-                        hintText: 'Enter your email address',
-                      ),
-                    ),
-                  ),
-                  Padding(
-                    padding: const EdgeInsets.symmetric(vertical: 10.0),
-                    child: TextFormField(
-                      obscureText: hidePassword,
-                      validator: (value) =>
-                          value!.isEmpty ? 'Please Enter your password' : null,
-                      onSaved: (value) => password = value!,
-                      decoration: textFormDecoration.copyWith(
-                          labelText: 'Password',
-                          hintText: 'Enter your password',
-                          suffixIcon: IconButton(
-                              onPressed: () {
-                                setState(() {
-                                  hidePassword = !hidePassword;
-                                });
-                              },
-                              icon: Icon(
-                                hidePassword
-                                    ? Icons.visibility
-                                    : Icons.visibility_off,
-                                color: Colors.purple,
-                              ))),
-                    ),
-                  ),
-                  isProcessing
-                      ? const CircularProgressIndicator()
-                      : AuthMainButton(
-                          label: 'Sign Up',
-                          onTap: signUp,
-                        ),
-                  HaveAccount(
-                    haveAccount: 'already have account??',
-                    actionLabel: 'Log In',
-                    onTap: () {
-                      Navigator.pushReplacementNamed(
-                          context, '/customer_login');
-                    },
-                  ),
-                ]),
+        body: SingleChildScrollView(
+          reverse: true,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Column(
+            children: [
+              Image.asset(
+                'images/inapp/logo.jpg',
+                height: 130.0,
+                fit: BoxFit.cover,
               ),
-            ),
+              Padding(
+                padding: const EdgeInsets.all(16.0),
+                child: Form(
+                  key: _formKey,
+                  child: Column(children: [
+                    const AuthHeaderLabel(
+                      headerLabel: 'Sign Up',
+                    ),
+                    Row(
+                      children: [
+                        Padding(
+                          padding: const EdgeInsets.symmetric(
+                              vertical: 20.0, horizontal: 40.0),
+                          child: CircleAvatar(
+                            radius: 60.0,
+                            backgroundColor:
+                                AppColor.appPrimary.withOpacity(0.4),
+                            backgroundImage: imageFile == null
+                                ? null
+                                : FileImage(File(imageFile!.path)),
+                          ),
+                        ),
+                        Column(
+                          children: [
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: AppColor.appPrimary,
+                                  borderRadius: const BorderRadius.only(
+                                      topLeft: Radius.circular(15.0),
+                                      topRight: Radius.circular(15.0))),
+                              child: IconButton(
+                                onPressed: _pickImageFromCamera,
+                                icon: const Icon(
+                                  Icons.camera_alt,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            ),
+                            const SizedBox(
+                              height: 8.0,
+                            ),
+                            Container(
+                              decoration: BoxDecoration(
+                                  color: AppColor.appPrimary,
+                                  borderRadius: const BorderRadius.only(
+                                      bottomLeft: Radius.circular(15.0),
+                                      bottomRight: Radius.circular(15.0))),
+                              child: IconButton(
+                                onPressed: _pickImageFromGallery,
+                                icon: const Icon(
+                                  Icons.image_search,
+                                  color: Colors.white,
+                                ),
+                              ),
+                            )
+                          ],
+                        )
+                      ],
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: TextFormField(
+                        validator: (value) =>
+                            value!.isEmpty ? 'Please Enter your name' : null,
+                        onSaved: (value) => name = value!,
+                        decoration: textFormDecoration.copyWith(
+                          labelText: 'Full Name',
+                          hintText: 'Enter your full name',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: TextFormField(
+                        validator: (value) {
+                          if (value!.isEmpty) {
+                            return 'Please enter your Email';
+                          } else if (value.isValidEmail() == false) {
+                            return 'Please enter a valid email address';
+                          } else {
+                            return null;
+                          }
+                        },
+                        onSaved: (value) => email = value!,
+                        keyboardType: TextInputType.emailAddress,
+                        decoration: textFormDecoration.copyWith(
+                          labelText: 'Email Address',
+                          hintText: 'Enter your email address',
+                        ),
+                      ),
+                    ),
+                    Padding(
+                      padding: const EdgeInsets.symmetric(vertical: 10.0),
+                      child: TextFormField(
+                        obscureText: hidePassword,
+                        validator: (value) => value!.isEmpty
+                            ? 'Please Enter your password'
+                            : null,
+                        onSaved: (value) => password = value!,
+                        decoration: textFormDecoration.copyWith(
+                            labelText: 'Password',
+                            hintText: 'Enter your password',
+                            suffixIcon: IconButton(
+                                onPressed: () {
+                                  setState(() {
+                                    hidePassword = !hidePassword;
+                                  });
+                                },
+                                icon: Icon(
+                                  hidePassword
+                                      ? Icons.visibility
+                                      : Icons.visibility_off,
+                                  color: AppColor.appPrimary,
+                                ))),
+                      ),
+                    ),
+                    isProcessing
+                        ? const CircularProgressIndicator()
+                        : AuthMainButton(
+                            label: 'Sign Up',
+                            onTap: signUp,
+                          ),
+                    HaveAccount(
+                      haveAccount: 'already have account??',
+                      actionLabel: 'Log In',
+                      onTap: () {
+                        Navigator.pushReplacementNamed(
+                            context, '/customer_login');
+                      },
+                    ),
+                  ]),
+                ),
+              ),
+            ],
           ),
         ),
       ),

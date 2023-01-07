@@ -1,3 +1,4 @@
+import 'package:MON_PARFUM/utilities/app_color.dart';
 import 'package:flutter/material.dart';
 
 class MessageHandler {
@@ -7,10 +8,10 @@ class MessageHandler {
     _scaffoldKey.currentState!.showSnackBar(SnackBar(
       content: Text(
         message,
-        style: const TextStyle(color: Colors.black),
+        style: const TextStyle(color: Colors.white),
       ),
       duration: const Duration(seconds: 2),
-      backgroundColor: Colors.yellowAccent,
+      backgroundColor: AppColor.appPrimary.withOpacity(0.8),
     ));
   }
 }

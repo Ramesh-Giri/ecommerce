@@ -1,4 +1,4 @@
-name: multi_store_app
+name: MON_PARFUM
 description: A new Flutter project.
 
 # The following line prevents the package from being accidentally published to
@@ -44,6 +44,13 @@ dependencies:
   uuid: ^3.0.6
   staggered_grid_view_flutter: ^0.0.4
   flutter_swiper_null_safety: ^1.0.2
+  icons_launcher: ^2.0.5
+  font_awesome_flutter: ^10.2.1
+  provider: ^6.0.4
+  sn_progress_dialog: ^1.0.8
+  flutter_date_pickers: ^0.4.0
+  flutter_datetime_picker: ^1.5.1
+  badges: ^2.0.3
 
 dev_dependencies:
   flutter_test:
@@ -107,3 +114,12 @@ flutter:
   #
   # For details regarding fonts from package dependencies,
   # see https://flutter.dev/custom-fonts/#from-packages
+
+icons_launcher:
+  image_path: 'images/inapp/app_icon.png'
+  platforms:
+    android:
+      enable: true
+    ios:
+      enable: true
+

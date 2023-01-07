@@ -1,6 +1,7 @@
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
+import '../utilities/app_color.dart';
 import '../widgets/auth_widgets.dart';
 import '../widgets/snackbar.dart';
 
@@ -68,94 +69,101 @@ class _CustomerLoginState extends State<CustomerLogin> {
       key: _scaffoldKey,
       child: Scaffold(
         backgroundColor: Colors.white,
-        body: SafeArea(
-          child: Center(
-            child: SingleChildScrollView(
-              reverse: true,
-              keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
-              padding: const EdgeInsets.all(16.0),
-              child: Form(
-                key: _formKey,
-                child: Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      const AuthHeaderLabel(
-                        headerLabel: 'Sign In',
-                      ),
-                      const SizedBox(
-                        height: 50.0,
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: TextFormField(
-                          validator: (value) {
-                            if (value!.isEmpty) {
-                              return 'Please enter your Email';
-                            } else if (value.isValidEmail() == false) {
-                              return 'Please enter a valid email address';
-                            } else {
-                              return null;
-                            }
-                          },
-                          onSaved: (value) => email = value!,
-                          keyboardType: TextInputType.emailAddress,
-                          decoration: textFormDecoration.copyWith(
-                            labelText: 'Email Address',
-                            hintText: 'Enter your email address',
+        body: SingleChildScrollView(
+          reverse: true,
+          keyboardDismissBehavior: ScrollViewKeyboardDismissBehavior.onDrag,
+          child: Form(
+            key: _formKey,
+            child: Column(
+              children: [
+                Image.asset(
+                  'images/inapp/logo.jpg',
+                  height: 130.0,
+                  fit: BoxFit.cover,
+                ),
+                Padding(
+                  padding: const EdgeInsets.all(16.0),
+                  child: Column(
+                      crossAxisAlignment: CrossAxisAlignment.end,
+                      children: [
+                        const AuthHeaderLabel(
+                          headerLabel: 'Sign In',
+                        ),
+                        const SizedBox(
+                          height: 50.0,
+                        ),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: TextFormField(
+                            validator: (value) {
+                              if (value!.isEmpty) {
+                                return 'Please enter your Email';
+                              } else if (value.isValidEmail() == false) {
+                                return 'Please enter a valid email address';
+                              } else {
+                                return null;
+                              }
+                            },
+                            onSaved: (value) => email = value!,
+                            keyboardType: TextInputType.emailAddress,
+                            decoration: textFormDecoration.copyWith(
+                              labelText: 'Email Address',
+                              hintText: 'Enter your email address',
+                            ),
                           ),
                         ),
-                      ),
-                      Padding(
-                        padding: const EdgeInsets.symmetric(vertical: 10.0),
-                        child: TextFormField(
-                          obscureText: hidePassword,
-                          validator: (value) => value!.isEmpty
-                              ? 'Please Enter your password'
-                              : null,
-                          onSaved: (value) => password = value!,
-                          decoration: textFormDecoration.copyWith(
-                              labelText: 'Password',
-                              hintText: 'Enter your password',
-                              suffixIcon: IconButton(
-                                  onPressed: () {
-                                    setState(() {
-                                      hidePassword = !hidePassword;
-                                    });
-                                  },
-                                  icon: Icon(
-                                    hidePassword
-                                        ? Icons.visibility
-                                        : Icons.visibility_off,
-                                    color: Colors.purple,
-                                  ))),
+                        Padding(
+                          padding: const EdgeInsets.symmetric(vertical: 10.0),
+                          child: TextFormField(
+                            obscureText: hidePassword,
+                            validator: (value) => value!.isEmpty
+                                ? 'Please Enter your password'
+                                : null,
+                            onSaved: (value) => password = value!,
+                            decoration: textFormDecoration.copyWith(
+                                labelText: 'Password',
+                                hintText: 'Enter your password',
+                                suffixIcon: IconButton(
+                                    onPressed: () {
+                                      setState(() {
+                                        hidePassword = !hidePassword;
+                                      });
+                                    },
+                                    icon: Icon(
+                                      hidePassword
+                                          ? Icons.visibility
+                                          : Icons.visibility_off,
+                                      color: AppColor.appPrimary,
+                                    ))),
+                          ),
                         ),
-                      ),
-                      TextButton(
-                        onPressed: () {},
-                        child: const Text(
-                          'Forgot password?',
-                          style: TextStyle(
-                              fontSize: 18.0,
-                              fontStyle: FontStyle.italic,
-                              color: Colors.black),
+                        TextButton(
+                          onPressed: () {},
+                          child: const Text(
+                            'Forgot password?',
+                            style: TextStyle(
+                                fontSize: 18.0,
+                                fontStyle: FontStyle.italic,
+                                color: Colors.black),
+                          ),
                         ),
-                      ),
-                      isProcessing
-                          ? const Center(child: CircularProgressIndicator())
-                          : AuthMainButton(
-                              label: 'Sign In',
-                              onTap: signIn,
-                            ),
-                      HaveAccount(
-                        haveAccount: 'New Here? ',
-                        actionLabel: 'Sign Up',
-                        onTap: () {
-                          Navigator.pushReplacementNamed(
-                              context, '/customer_register');
-                        },
-                      ),
-                    ]),
-              ),
+                        isProcessing
+                            ? const Center(child: CircularProgressIndicator())
+                            : AuthMainButton(
+                                label: 'Sign In',
+                                onTap: signIn,
+                              ),
+                        HaveAccount(
+                          haveAccount: 'New Here? ',
+                          actionLabel: 'Sign Up',
+                          onTap: () {
+                            Navigator.pushReplacementNamed(
+                                context, '/customer_register');
+                          },
+                        ),
+                      ]),
+                ),
+              ],
             ),
           ),
         ),

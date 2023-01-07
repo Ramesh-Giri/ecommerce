@@ -1,11 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/gallery/bags_gallery.dart';
-import 'package:multi_store_app/gallery/electronics_gallery.dart';
-import 'package:multi_store_app/gallery/shoes_gallery.dart';
 
 import '../gallery/men_gallery.dart';
+import '../gallery/shoes_gallery.dart';
 import '../gallery/women_gallery.dart';
+import '../utilities/app_color.dart';
 import '../widgets/fake_search.dart';
 
 class HomeScreen extends StatefulWidget {
@@ -16,44 +15,78 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  bool showAds = true;
+
+  @override
+  void initState() {
+    super.initState();
+    showAds = true;
+  }
+
   @override
   Widget build(BuildContext context) {
     return DefaultTabController(
-      length: 9,
+      length: 3,
       child: Scaffold(
         backgroundColor: Colors.blueGrey.shade100.withOpacity(0.5),
         appBar: AppBar(
           elevation: 0.0,
           backgroundColor: Colors.white,
           title: const FakeSearch(),
-          bottom: const TabBar(
+          bottom: TabBar(
             isScrollable: true,
-            indicatorColor: Colors.yellow,
+            indicatorColor: AppColor.appPrimary,
             indicatorWeight: 2.0,
-            tabs: [
+            tabs: const [
               RepeatTab(title: 'Mens'),
               RepeatTab(title: 'Women'),
-              RepeatTab(title: 'Shoes'),
-              RepeatTab(title: 'Bags'),
-              RepeatTab(title: 'Electronics'),
-              RepeatTab(title: 'Accessories'),
-              RepeatTab(title: 'Home & Gardens'),
-              RepeatTab(title: 'Kids'),
-              RepeatTab(title: 'Beauty'),
+              RepeatTab(title: 'Unisex'),
             ],
           ),
         ),
-        body: const TabBarView(
+        body: Stack(
           children: [
-            MenGalleryScreen(),
-            WomenGalleryScreen(),
-            ShoesGalleryScreen(),
-            BagsGalleryScreen(),
-            ElectronicsGalleryScreen(),
-            Center(child: Text('Accessories Screen')),
-            Center(child: Text('Home & Gardens Screen')),
-            Center(child: Text('Kids Screen')),
-            Center(child: Text('Beauty Screen')),
+            const TabBarView(
+              children: [
+                MenGalleryScreen(),
+                WomenGalleryScreen(),
+                UnisexGalleryScreen(),
+              ],
+            ),
+            if (showAds)
+              Positioned(
+                bottom: 0.0,
+                right: 0.0,
+                left: 0.0,
+                child: Stack(
+                  children: [
+                    const Card(
+                      elevation: 10.0,
+                      child: SizedBox(
+                        height: 60.0,
+                        child: Center(
+                          child:
+                              Text('Advertise with us at only \$20 per month'),
+                        ),
+                      ),
+                    ),
+                    Positioned(
+                        right: 5.0,
+                        top: 5.0,
+                        child: InkWell(
+                          onTap: () {
+                            setState(() {
+                              showAds = false;
+                            });
+                          },
+                          child: const Icon(
+                            Icons.close,
+                            size: 16.0,
+                          ),
+                        ))
+                  ],
+                ),
+              ),
           ],
         ),
       ),

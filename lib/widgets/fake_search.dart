@@ -1,3 +1,4 @@
+import 'package:MON_PARFUM/utilities/app_color.dart';
 import 'package:flutter/material.dart';
 
 import '../minor_screens/search.dart';
@@ -18,7 +19,7 @@ class FakeSearch extends StatelessWidget {
         height: 35.0,
         decoration: BoxDecoration(
             border: Border.all(
-              color: Colors.yellow,
+              color: AppColor.appPrimaryFaded,
               width: 1.4,
             ),
             borderRadius: BorderRadius.circular(25.0)),
@@ -35,7 +36,7 @@ class FakeSearch extends StatelessWidget {
                   ),
                 ),
                 Text(
-                  'What are you looking for?',
+                  'search',
                   style: TextStyle(fontSize: 16.0, color: Colors.grey),
                 ),
               ],
@@ -44,12 +45,12 @@ class FakeSearch extends StatelessWidget {
               height: 32.0,
               width: 75.0,
               decoration: BoxDecoration(
-                  color: Colors.yellow,
+                  color: AppColor.appPrimary,
                   borderRadius: BorderRadius.circular(25.0)),
               child: const Center(
                 child: Text(
                   'Search',
-                  style: TextStyle(fontSize: 16.0, color: Colors.grey),
+                  style: TextStyle(fontSize: 16.0, color: Colors.white),
                 ),
               ),
             )

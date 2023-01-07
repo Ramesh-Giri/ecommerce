@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<dict>
+	<key>CLIENT_ID</key>
+	<string>984196952891-ihm1jjg5pjl2gd5i94opjghlcs1447r7.apps.googleusercontent.com</string>
+	<key>REVERSED_CLIENT_ID</key>
+	<string>com.googleusercontent.apps.984196952891-ihm1jjg5pjl2gd5i94opjghlcs1447r7</string>
+	<key>ANDROID_CLIENT_ID</key>
+	<string>984196952891-1vflmo395bt0b028o8q1c2kk6pg5hrv4.apps.googleusercontent.com</string>
+	<key>API_KEY</key>
+	<string>AIzaSyBRpTtGEE6k9qIylpXt6kw5DorO0ACSyzc</string>
+	<key>GCM_SENDER_ID</key>
+	<string>984196952891</string>
+	<key>PLIST_VERSION</key>
+	<string>1</string>
+	<key>BUNDLE_ID</key>
+	<string>com.app.ramesh.mon-parfum</string>
+	<key>PROJECT_ID</key>
+	<string>e-commerce-374b0</string>
+	<key>STORAGE_BUCKET</key>
+	<string>e-commerce-374b0.appspot.com</string>
+	<key>IS_ADS_ENABLED</key>
+	<false></false>
+	<key>IS_ANALYTICS_ENABLED</key>
+	<false></false>
+	<key>IS_APPINVITE_ENABLED</key>
+	<true></true>
+	<key>IS_GCM_ENABLED</key>
+	<true></true>
+	<key>IS_SIGNIN_ENABLED</key>
+	<true></true>
+	<key>GOOGLE_APP_ID</key>
+	<string>1:984196952891:ios:306a18b0b176a1336cbd1e</string>
+</dict>
+</plist>

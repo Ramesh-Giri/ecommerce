@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/utilities/categ_list.dart';
 
+import '../utilities/categ_list.dart';
 import '../widgets/category_widgets.dart';
 
 class MenCategory extends StatefulWidget {
@@ -39,7 +39,7 @@ class _MenCategoryState extends State<MenCategory> {
                         return SubCategoryItem(
                             mainCategoryName: 'men',
                             subCategoryName: men[index + 1],
-                            assetName: 'images/men/men$index.jpg',
+                            assetName: 'images/men/men$index.jpeg',
                             subCategoryLabel: men[index + 1]);
                       }),
                     ),

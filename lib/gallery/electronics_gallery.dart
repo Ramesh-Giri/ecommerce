@@ -39,7 +39,7 @@ class _ElectronicsGalleryScreenState extends State<ElectronicsGalleryScreen> {
             return Center(
               child: Text(
                 'No Product for this category',
-                style: GoogleFonts.acme(
+                style: GoogleFonts.sansita(
                     fontSize: 26.0,
                     color: Colors.blueGrey,
                     fontWeight: FontWeight.bold,

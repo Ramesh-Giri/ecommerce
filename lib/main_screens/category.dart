@@ -1,12 +1,6 @@
+import 'package:MON_PARFUM/categories/unisex_category.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/categories/shoes_category.dart';
 
-import '../categories/accessories_category.dart';
-import '../categories/bags_category.dart';
-import '../categories/beauty_category.dart';
-import '../categories/electronics_category.dart';
-import '../categories/homegarden_category.dart';
-import '../categories/kids_category.dart';
 import '../categories/men_category.dart';
 import '../categories/women_category.dart';
 import '../widgets/fake_search.dart';
@@ -14,13 +8,7 @@ import '../widgets/fake_search.dart';
 List<ItemsData> items = [
   ItemsData(label: 'Men'),
   ItemsData(label: 'Women'),
-  ItemsData(label: 'Shoes'),
-  ItemsData(label: 'Bags'),
-  ItemsData(label: 'Electronics'),
-  ItemsData(label: 'Accessories'),
-  ItemsData(label: 'Home & Garden'),
-  ItemsData(label: 'Kids'),
-  ItemsData(label: 'Beauty'),
+  ItemsData(label: 'Unisex'),
 ];
 
 class CategoryScreen extends StatefulWidget {
@@ -66,7 +54,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
 
   Widget sideNavigator(Size size) {
     return SizedBox(
-      height: size.height * 0.8,
+      height: size.height * 0.6,
       width: size.width * 0.2,
       child: ListView.builder(
           itemCount: items.length,
@@ -109,13 +97,7 @@ class _CategoryScreenState extends State<CategoryScreen> {
         children: const [
           MenCategory(),
           WomenCategory(),
-          ShoesCategory(),
-          BagsCategory(),
-          ElectronicsCategory(),
-          AccessoriesCategory(),
-          HomeGardenCategory(),
-          KidsCategory(),
-          BeautyCategory(),
+          UnisexCategory(),
         ],
       ),
     );

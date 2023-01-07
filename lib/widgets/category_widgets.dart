@@ -85,7 +85,7 @@ class SubCategoryItem extends StatelessWidget {
             ),
           ),
           Text(
-            subCategoryLabel,
+            subCategoryLabel.toUpperCase(),
             style: const TextStyle(fontSize: 12.0),
           )
         ],

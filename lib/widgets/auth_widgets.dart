@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../utilities/app_color.dart';
+
 class AuthMainButton extends StatelessWidget {
   final String label;
   final Function() onTap;
@@ -10,9 +12,9 @@ class AuthMainButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Padding(
-      padding: const EdgeInsets.symmetric(vertical: 30.0),
+      padding: const EdgeInsets.symmetric(vertical: 4.0),
       child: Material(
-        color: Colors.purple,
+        color: AppColor.appPrimary,
         borderRadius: BorderRadius.circular(25.0),
         child: MaterialButton(
           minWidth: double.infinity,
@@ -53,8 +55,8 @@ class HaveAccount extends StatelessWidget {
         TextButton(
           child: Text(
             actionLabel,
-            style: const TextStyle(
-                color: Colors.purple,
+            style: TextStyle(
+                color: AppColor.appPrimary,
                 fontWeight: FontWeight.bold,
                 fontSize: 20.0),
           ),
@@ -95,15 +97,14 @@ class AuthHeaderLabel extends StatelessWidget {
 
 var textFormDecoration = InputDecoration(
   border: OutlineInputBorder(
-    borderRadius: BorderRadius.circular(25.0),
+    borderSide:
+        BorderSide(color: AppColor.appPrimary.withOpacity(0.2), width: 1.0),
   ),
   enabledBorder: OutlineInputBorder(
-    borderSide: const BorderSide(color: Colors.purple, width: 1.0),
-    borderRadius: BorderRadius.circular(25.0),
+    borderSide: BorderSide(color: AppColor.appPrimary, width: 1.0),
   ),
   focusedBorder: OutlineInputBorder(
-    borderSide: const BorderSide(color: Colors.deepPurple, width: 2.0),
-    borderRadius: BorderRadius.circular(25.0),
+    borderSide: BorderSide(color: AppColor.appPrimary, width: 2.0),
   ),
 );
 

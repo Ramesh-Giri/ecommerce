@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/widgets/appbar_widgets.dart';
+
+import '../utilities/app_color.dart';
+import '../widgets/appbar_widgets.dart';
 
 class FullScreenImage extends StatefulWidget {
   final List<dynamic> images;
@@ -72,7 +74,7 @@ class _FullScreenImageState extends State<FullScreenImage> {
                       border: Border.all(
                           width: 2.0,
                           color: selectedIndex == index
-                              ? Colors.yellow
+                              ? AppColor.appPrimary
                               : Colors.transparent),
                       borderRadius: BorderRadius.circular(15.0)),
                   child: ClipRRect(

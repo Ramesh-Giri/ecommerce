@@ -57,7 +57,7 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions android = FirebaseOptions(
     apiKey: 'AIzaSyAMhICQUSq1kNCpp8ctWEMnrznlHK33bnw',
-    appId: '1:984196952891:android:f54b3c20b45b50f06cbd1e',
+    appId: '1:984196952891:android:3db5cbc55234c3c36cbd1e',
     messagingSenderId: '984196952891',
     projectId: 'e-commerce-374b0',
     storageBucket: 'e-commerce-374b0.appspot.com',
@@ -65,11 +65,12 @@ class DefaultFirebaseOptions {
 
   static const FirebaseOptions ios = FirebaseOptions(
     apiKey: 'AIzaSyBRpTtGEE6k9qIylpXt6kw5DorO0ACSyzc',
-    appId: '1:984196952891:ios:2375d145e72e84fb6cbd1e',
+    appId: '1:984196952891:ios:306a18b0b176a1336cbd1e',
     messagingSenderId: '984196952891',
     projectId: 'e-commerce-374b0',
     storageBucket: 'e-commerce-374b0.appspot.com',
-    iosClientId: '984196952891-gmnruk3pqni6neim3b4ki71b842q49hj.apps.googleusercontent.com',
-    iosBundleId: 'com.example.multiStoreApp',
+    androidClientId: '984196952891-1vflmo395bt0b028o8q1c2kk6pg5hrv4.apps.googleusercontent.com',
+    iosClientId: '984196952891-ihm1jjg5pjl2gd5i94opjghlcs1447r7.apps.googleusercontent.com',
+    iosBundleId: 'com.app.ramesh.mon-parfum',
   );
 }

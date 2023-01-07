@@ -1,18 +1,27 @@
+import 'package:MON_PARFUM/providers/cart_provider.dart';
+import 'package:MON_PARFUM/providers/wishlist.dart';
 import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/auth/supplier_login.dart';
-import 'package:multi_store_app/auth/supplier_signup.dart';
-import 'package:multi_store_app/main_screens/customer_home.dart';
-import 'package:multi_store_app/main_screens/supplier_home.dart';
+import 'package:provider/provider.dart';
 
 import 'auth/customer_login.dart';
 import 'auth/customer_signup.dart';
+import 'auth/supplier_login.dart';
+import 'auth/supplier_signup.dart';
+import 'main_screens/customer_home.dart';
+import 'main_screens/supplier_home.dart';
 import 'main_screens/welcome_screen.dart';
 
 void main() async {
   WidgetsFlutterBinding.ensureInitialized();
   await Firebase.initializeApp();
-  runApp(const MyApp());
+  runApp(MultiProvider(
+    providers: [
+      ChangeNotifierProvider(create: (_) => Cart()),
+      ChangeNotifierProvider(create: (_) => WishList()),
+    ],
+    child: const MyApp(),
+  ));
 }
 
 class MyApp extends StatelessWidget {
@@ -31,7 +40,7 @@ class MyApp extends StatelessWidget {
         '/supplier_register': (context) => const SupplierRegister(),
       },
       debugShowCheckedModeBanner: false,
-      title: 'Multi-Store',
+      title: 'MON PARFUM',
       initialRoute: '/welcome_screen',
     );
   }

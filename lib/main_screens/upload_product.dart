@@ -5,11 +5,12 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'package:firebase_storage/firebase_storage.dart';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
-import 'package:multi_store_app/widgets/snackbar.dart';
 import 'package:path/path.dart' as path;
 import 'package:uuid/uuid.dart';
 
+import '../utilities/app_color.dart';
 import '../utilities/categ_list.dart';
+import '../widgets/snackbar.dart';
 
 class UploadProductScreen extends StatefulWidget {
   const UploadProductScreen({Key? key}) : super(key: key);
@@ -25,6 +26,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
   late double price;
   late int quantity;
   late String productName;
+  late String productBrand;
   late String productDescription;
   late String productId;
   String category = "select category";
@@ -61,20 +63,8 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
       subCategoryList = men;
     } else if (value == 'women') {
       subCategoryList = women;
-    } else if (value == 'electronics') {
-      subCategoryList = electronics;
-    } else if (value == 'accessories') {
-      subCategoryList = accessories;
-    } else if (value == 'shoes') {
-      subCategoryList = shoes;
-    } else if (value == 'home & garden') {
-      subCategoryList = homeandgarden;
-    } else if (value == 'beauty') {
-      subCategoryList = beauty;
-    } else if (value == 'kids') {
-      subCategoryList = kids;
-    } else if (value == 'bags') {
-      subCategoryList = bags;
+    } else if (value == 'unisex') {
+      subCategoryList = unisex;
     } else {
       subCategoryList = [];
     }
@@ -114,9 +104,11 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                 'price': price,
                 'productId': productId,
                 'sId': FirebaseAuth.instance.currentUser!.uid,
-                'quantity': quantity,
+                'inStock': quantity,
                 'discount': 0,
+                'isDeleted': false,
                 'productName': productName,
+                'productBrand': productBrand,
                 'productDescription': productDescription,
                 'mainCategory': category,
                 'subCategory': subCategory,
@@ -172,26 +164,33 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                         children: [
                           Stack(
                             children: [
-                              Container(
-                                color: Colors.blueGrey.shade100,
-                                height: MediaQuery.of(context).size.width * 0.5,
-                                width: MediaQuery.of(context).size.width * 0.5,
-                                child: imageFiles!.isEmpty
-                                    ? const Center(
-                                        child: Text(
-                                        'Pick Images',
-                                        textAlign: TextAlign.center,
-                                        style: TextStyle(fontSize: 16.0),
-                                      ))
-                                    : ListView.builder(
-                                        itemCount: imageFiles!.length,
-                                        itemBuilder: (context, index) =>
-                                            Padding(
-                                              padding:
-                                                  const EdgeInsets.all(8.0),
-                                              child: Image.file(File(
-                                                  imageFiles![index].path)),
-                                            )),
+                              InkWell(
+                                onTap: _pickImageFromGallery,
+                                child: Container(
+                                  color: Colors.blueGrey.shade100,
+                                  height:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  width:
+                                      MediaQuery.of(context).size.width * 0.5,
+                                  child: imageFiles!.isEmpty
+                                      ? const Center(
+                                          child: Text(
+                                          'Pick Images',
+                                          textAlign: TextAlign.center,
+                                          style: TextStyle(fontSize: 16.0),
+                                        ))
+                                      : ListView.builder(
+                                          itemCount: imageFiles!.length,
+                                          itemBuilder: (context, index) =>
+                                              Padding(
+                                                padding:
+                                                    const EdgeInsets.all(8.0),
+                                                child: Image.file(
+                                                  File(imageFiles![index].path),
+                                                  fit: BoxFit.cover,
+                                                ),
+                                              )),
+                                ),
                               ),
                               if (imageFiles!.isNotEmpty)
                                 Positioned(
@@ -230,7 +229,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                                           iconSize: 40.0,
                                           menuMaxHeight: 500,
                                           iconEnabledColor: Colors.red,
-                                          dropdownColor: Colors.yellow.shade300,
+                                          dropdownColor: Colors.grey.shade200,
                                           value: category,
                                           items: maincateg
                                               .map<DropdownMenuItem<String>>(
@@ -260,8 +259,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                                             iconSize: 40.0,
                                             iconEnabledColor: Colors.red,
                                             iconDisabledColor: Colors.black,
-                                            dropdownColor:
-                                                Colors.yellow.shade300,
+                                            dropdownColor: Colors.grey.shade200,
                                             value: subCategory,
                                             items: subCategoryList
                                                 .map<DropdownMenuItem<String>>(
@@ -284,9 +282,9 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                           )
                         ],
                       ),
-                      const Divider(
+                      Divider(
                         height: 30.0,
-                        color: Colors.yellow,
+                        color: Colors.grey.withOpacity(0.4),
                         thickness: 1.5,
                       ),
                       Padding(
@@ -331,7 +329,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                             onSaved: (value) => quantity = int.parse(value!),
                             decoration: textFormDecoration.copyWith(
                               labelText: 'Quantity',
-                              hintText: 'Add quantity',
+                              hintText: 'in stock',
                             ),
                           ),
                         ),
@@ -343,7 +341,7 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                           maxLength: 100,
                           validator: (value) {
                             if (value!.isEmpty) {
-                              return 'Please Enter Product Name';
+                              return 'Please Enter Perfume Name';
                             } else {
                               return null;
                             }
@@ -352,6 +350,23 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                           decoration: textFormDecoration.copyWith(
                             labelText: 'Product Name',
                             hintText: 'Enter product name',
+                          ),
+                        ),
+                      ),
+                      Padding(
+                        padding: const EdgeInsets.all(8.0),
+                        child: TextFormField(
+                          validator: (value) {
+                            if (value!.isEmpty) {
+                              return 'Please Enter Perfume Name';
+                            } else {
+                              return null;
+                            }
+                          },
+                          onSaved: (value) => productBrand = value!,
+                          decoration: textFormDecoration.copyWith(
+                            labelText: 'Brand',
+                            hintText: 'Brand name',
                           ),
                         ),
                       ),
@@ -398,22 +413,11 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
                 mainAxisAlignment: MainAxisAlignment.end,
                 children: [
                   FloatingActionButton(
-                    backgroundColor: Colors.yellow,
-                    onPressed: _pickImageFromGallery,
-                    child: const Icon(
-                      Icons.photo_library,
-                      color: Colors.black,
-                    ),
-                  ),
-                  const SizedBox(
-                    width: 6.0,
-                  ),
-                  FloatingActionButton(
-                    backgroundColor: Colors.yellow,
+                    backgroundColor: AppColor.appPrimary,
                     onPressed: uploadProduct,
                     child: const Icon(
                       Icons.upload,
-                      color: Colors.black,
+                      color: Colors.white,
                     ),
                   )
                 ],
@@ -424,16 +428,16 @@ class _UploadProductScreenState extends State<UploadProductScreen> {
 }
 
 var textFormDecoration = InputDecoration(
-  labelStyle: const TextStyle(color: Colors.purple),
+  labelStyle: TextStyle(color: AppColor.appPrimary),
   border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(10.0),
   ),
   enabledBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10.0),
-      borderSide: const BorderSide(color: Colors.yellow, width: 1)),
+      borderSide: const BorderSide(color: Colors.grey, width: 1)),
   focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(10.0),
-      borderSide: const BorderSide(color: Colors.blueAccent, width: 2)),
+      borderSide: BorderSide(color: AppColor.appPrimary, width: 2)),
 );
 
 extension QuantityValidator on String {

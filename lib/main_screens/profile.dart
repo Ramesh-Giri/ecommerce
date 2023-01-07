@@ -1,13 +1,14 @@
+import 'package:MON_PARFUM/utilities/app_color.dart';
 import 'package:cloud_firestore/cloud_firestore.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/customer_screens/customer_orders.dart';
-import 'package:multi_store_app/customer_screens/wishlist.dart';
-import 'package:multi_store_app/main_screens/cart.dart';
 
+import '../customer_screens/customer_orders.dart';
+import '../customer_screens/wishlist.dart';
 import '../widgets/alert_dialog.dart';
 import '../widgets/appbar_widgets.dart';
+import 'cart.dart';
 
 class ProfileScreen extends StatefulWidget {
   final String userId;
@@ -21,10 +22,14 @@ class ProfileScreen extends StatefulWidget {
 class _ProfileScreenState extends State<ProfileScreen> {
   var customerRef = FirebaseFirestore.instance.collection('customers');
 
+  var anonymousCustomerRef = FirebaseFirestore.instance.collection('anonymous');
+
   @override
   Widget build(BuildContext context) {
     return FutureBuilder(
-      future: customerRef.doc(widget.userId).get(),
+      future: FirebaseAuth.instance.currentUser!.isAnonymous
+          ? anonymousCustomerRef.doc(widget.userId).get()
+          : customerRef.doc(widget.userId).get(),
       builder: (context, AsyncSnapshot<DocumentSnapshot> snapshot) {
         if (snapshot.hasError) {
           return const Center(child: Text('Error loading data'));
@@ -43,8 +48,11 @@ class _ProfileScreenState extends State<ProfileScreen> {
                 Container(
                   height: 200.0,
                   decoration: const BoxDecoration(
-                      gradient: LinearGradient(
-                          colors: [Colors.yellow, Colors.brown])),
+                      gradient: LinearGradient(colors: [
+                    Color(0xff3D3BAB),
+                    Color(0xff4745AF),
+                    Color(0xff4C4AB2),
+                  ])),
                 ),
                 CustomScrollView(
                   physics: const BouncingScrollPhysics(),
@@ -69,26 +77,36 @@ class _ProfileScreenState extends State<ProfileScreen> {
                             ),
                             background: Container(
                               decoration: const BoxDecoration(
-                                  gradient: LinearGradient(
-                                      colors: [Colors.yellow, Colors.brown])),
+                                  gradient: LinearGradient(colors: [
+                                Color(0xff3D3BAB),
+                                Color(0xff4745AF),
+                                Color(0xff4C4AB2),
+                              ])),
                               child: Padding(
                                 padding: const EdgeInsets.only(
                                     top: 25.0, left: 20.0),
                                 child: Row(
                                   children: [
                                     data['profileImageUrl'].isEmpty
-                                        ? CircleAvatar(
+                                        ? const CircleAvatar(
                                             radius: 50.0,
                                             backgroundColor: Colors.grey,
                                             backgroundImage: AssetImage(
                                               'images/inapp/guest.jpg',
                                             ),
                                           )
-                                        : CircleAvatar(
-                                            radius: 50.0,
-                                            backgroundColor: Colors.grey,
-                                            backgroundImage: NetworkImage(
-                                              data['profileImageUrl'],
+                                        : Container(
+                                            decoration: BoxDecoration(
+                                                shape: BoxShape.circle,
+                                                border: Border.all(
+                                                    color: Colors.white,
+                                                    width: 2.0)),
+                                            child: CircleAvatar(
+                                              radius: 50.0,
+                                              backgroundColor: Colors.grey,
+                                              backgroundImage: NetworkImage(
+                                                data['profileImageUrl'],
+                                              ),
                                             ),
                                           ),
                                     Padding(
@@ -99,7 +117,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                             ? 'Guest'.toUpperCase()
                                             : data['fullName'].toUpperCase(),
                                         style: const TextStyle(
-                                            color: Colors.black,
+                                            color: Colors.white,
                                             fontSize: 24.0,
                                             fontWeight: FontWeight.w600),
                                       ),
@@ -148,7 +166,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Cart',
                                           style: TextStyle(
-                                              color: Colors.yellow,
+                                              color: Colors.white,
                                               fontSize: 20.0),
                                         ),
                                       ),
@@ -156,7 +174,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                   ),
                                 ),
                                 Container(
-                                  color: Colors.yellow,
+                                  color: AppColor.appPrimary.withOpacity(0.6),
                                   child: SizedBox(
                                     height: 40.0,
                                     width:
@@ -173,7 +191,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Orders',
                                           style: TextStyle(
-                                              color: Colors.black54,
+                                              color: Colors.white,
                                               fontSize: 20.0),
                                         ),
                                       ),
@@ -202,7 +220,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                                         child: Text(
                                           'Wishlist',
                                           style: TextStyle(
-                                              color: Colors.yellow,
+                                              color: Colors.white,
                                               fontSize: 20.0),
                                         ),
                                       ),
@@ -335,10 +353,10 @@ class YellowDivider extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Padding(
-      padding: EdgeInsets.symmetric(horizontal: 40.0),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40.0),
       child: Divider(
-        color: Colors.yellow,
+        color: AppColor.appPrimaryFaded,
         thickness: 1,
       ),
     );

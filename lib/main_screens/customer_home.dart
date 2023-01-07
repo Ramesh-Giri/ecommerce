@@ -1,7 +1,7 @@
+import 'package:MON_PARFUM/main_screens/profile.dart';
+import 'package:MON_PARFUM/main_screens/stores.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
-import 'package:multi_store_app/main_screens/profile.dart';
-import 'package:multi_store_app/main_screens/stores.dart';
 
 import 'cart.dart';
 import 'category.dart';

@@ -17,6 +17,7 @@ class _MenGalleryScreenState extends State<MenGalleryScreen> {
   final Stream<QuerySnapshot> productStream = FirebaseFirestore.instance
       .collection('products')
       .where('mainCategory', isEqualTo: 'men')
+      .where('isDeleted', isEqualTo: false)
       .snapshots();
 
   @override
@@ -36,8 +37,8 @@ class _MenGalleryScreenState extends State<MenGalleryScreen> {
 
           if (snapshot.data!.docs.isEmpty) {
             return Text(
-              'No Product for this category',
-              style: GoogleFonts.acme(
+              'No Product\nfor this category',
+              style: GoogleFonts.sansita(
                   fontSize: 26.0,
                   color: Colors.blueGrey,
                   fontWeight: FontWeight.bold,

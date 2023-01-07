@@ -49,8 +49,8 @@ class SubCategoryProducts extends StatelessWidget {
             if (snapshot.data!.docs.isEmpty) {
               return Center(
                 child: Text(
-                  'No Product for this category',
-                  style: GoogleFonts.acme(
+                  'No Product\nfor this category',
+                  style: GoogleFonts.sansita(
                       fontSize: 26.0,
                       color: Colors.blueGrey,
                       fontWeight: FontWeight.bold,

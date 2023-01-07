@@ -6,17 +6,17 @@ import 'package:staggered_grid_view_flutter/widgets/staggered_tile.dart';
 
 import '../widgets/product_item.dart';
 
-class ShoesGalleryScreen extends StatefulWidget {
-  const ShoesGalleryScreen({Key? key}) : super(key: key);
+class UnisexGalleryScreen extends StatefulWidget {
+  const UnisexGalleryScreen({Key? key}) : super(key: key);
 
   @override
-  State<ShoesGalleryScreen> createState() => _ShoesGalleryScreenState();
+  State<UnisexGalleryScreen> createState() => _UnisexGalleryScreenState();
 }
 
-class _ShoesGalleryScreenState extends State<ShoesGalleryScreen> {
+class _UnisexGalleryScreenState extends State<UnisexGalleryScreen> {
   final Stream<QuerySnapshot> productStream = FirebaseFirestore.instance
       .collection('products')
-      .where('mainCategory', isEqualTo: 'shoes')
+      .where('mainCategory', isEqualTo: 'unisex')
       .snapshots();
 
   @override
@@ -38,7 +38,7 @@ class _ShoesGalleryScreenState extends State<ShoesGalleryScreen> {
             return Center(
               child: Text(
                 'No Product for this category',
-                style: GoogleFonts.acme(
+                style: GoogleFonts.sansita(
                     fontSize: 26.0,
                     color: Colors.blueGrey,
                     fontWeight: FontWeight.bold,
